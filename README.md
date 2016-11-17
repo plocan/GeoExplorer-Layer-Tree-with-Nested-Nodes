@@ -4,7 +4,7 @@
 ##Table of contents
 
 1. [Introduction](#Introduction)
-2. [Prerrequisites](#Prerrequisites)
+	1. [Prerequisites](#Prerequisites)
 1. [Versioning](#Versioning)
 1. [Authors](#Authors)
 
