@@ -1,7 +1,7 @@
 ![Picture](https://empleo.plocan.eu/static/plocan.png)
 # Gis-web
 
-##Table of contents
+## Table of contents
 
 1. [Introduction](#Introduction)
 	1. [Prerequisites](#Prerequisites)
@@ -10,7 +10,7 @@
 
 
 
-##Introduction
+## Introduction
 
 This project covers the develop of some characteristics for GIS.
 
