@@ -50890,6 +50890,8 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
 
     addGroupsToTree2: function(treeGroups, panel){
         var treeRoot = Ext.getCmp("layers").root; 
+        var insertedFirstNode = false;
+        var prevNode;
         if(!treeGroups)
             return;
         for (var i = 1; i < treeGroups.childs.length; i++) {//starting in 1 for skiping rootnode: Layers or Capas (according to language)
@@ -50898,6 +50900,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                 var nodeName =  elem.text;
                 var groupName = elem.group != "" ? elem.group : "";
 
+                //improve this line removing dependencies of text, it can be done easily
                 if(elem.type  == "leaf" || elem.text == "Capa base" || elem.text =="Overlays" || elem.text == "Capas superpuestas" || elem.text == "Base Maps")
                     continue;
                 var sa;
@@ -50908,8 +50911,15 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                     sa = this.createContainerGroup(nodeName, groupName, panel);
                 }
 
-                if(elem.depth == 1)
-                   treeRoot.appendChild(sa);
+                if(elem.depth == 1){
+                    if(!insertedFirstNode){
+                        treeRoot.insertBefore(sa, treeRoot.firstChild);                
+                        insertedFirstNode = true;
+                    }
+                    else
+                        treeRoot.insertBefore(sa, prevNode.nextSibling);
+                    prevNode = sa;
+                }
                 else
                 {
                     var parent = treeRoot.findChild("text",elem.parentName,true);
@@ -86757,6 +86767,134 @@ gxp.plugins.AddLayers = Ext.extend(gxp.plugins.Tool, {
         }
         
     },
+
+   getInsertPosition: function(layerStore, root, selectedNode, leaf){
+        if(leaf.index)
+        
+        for (var i = 0, length = root.childNodes.length; i < length; i++) {
+            this.getInsertPosition(layerStore, root.childNodes[i], selectedNode, leaf);
+        }
+ 
+        if(root.leaf && root.parentNode.attributes.group != "background" && !leaf.founded)//only leaves not in background group
+        {
+            leaf.node = root;       
+            if(leaf.isDescendant){
+                newRecordIndex = layerStore.findBy(function(r) {
+                        return leaf.node.layer === r.getLayer();
+                });
+                leaf.index = newRecordIndex;
+                leaf.founded = true;
+            }
+        }
+
+        if(root.attributes.text == selectedNode.attributes.text)
+        {
+            if(leaf.node != null)
+            {
+                newRecordIndex = layerStore.findBy(function(r) {
+                        return leaf.node.layer === r.getLayer();
+                });
+                leaf.index = newRecordIndex;
+                leaf.founded = true;
+            }
+            else 
+                leaf.isDescendant = true;
+        }
+         
+        
+       /* var stack = [{
+            element: root
+        }];
+        var stackItem = 0;
+        var current;
+        var children, i, len;
+        var elem;
+        var descendant = false;
+        var leaf;
+        var newRecordIndex = -1;
+
+        while (current = stack[stackItem++]) {
+            elem = current.element;
+
+            if(elem.attributes.text == selectedNode.attributes.text)
+            {
+                if(leaf != null)
+                {
+
+                    newRecordIndex = this.store.findBy(function(r) {
+                            return leaf.parentNode.layer === r.getLayer();
+                    });
+                    return newRecordIndex;
+                }
+                else 
+                    descendant = true;
+                
+            } 
+            
+            if(elem.leaf && elem.parentNode.attributes.group != "background")//only leaves not in background group
+            {
+                leaf = current;       
+                if(descendant){
+                    newRecordIndex = this.store.findBy(function(r) {
+                            return leaf.parentNode.layer === r.getLayer();
+                    });
+                    return newRecordIndex;      
+                }
+            }
+            
+            children = elem.childNodes;
+
+            for (i = 0, len = children.length; i < len; i++) {
+                stack.push({ 
+                    element: children[i]
+                });
+            }
+        }
+        return newRecordIndex;*/
+
+       /* var newRecordIndex;
+        
+        if(selectedNode.childNodes.length > 1) {
+            // find index by neighboring node in the same container
+            var searchIndex = (index === 0) ? index + 1 : index - 1;
+            newRecordIndex = this.store.findBy(function(r) {
+                return selectedNode.childNodes[searchIndex].layer === r.getLayer();
+            });
+
+            return newRecordIndex++;
+
+        } else {
+
+            //go up
+            var prev = selectedNode;
+            
+            do {
+                prev = prev.previousSibling;
+            } while (prev && !(prev instanceof GeoExt.tree.LayerContainer && prev.lastChild));
+            
+            if(prev) {
+                newRecordIndex = this.store.findBy(function(r) {
+                     return prev.lastChild.layer === r.getLayer();
+                });
+
+            } else {
+                // find indext by first node of a container below
+                var next = selectedNode;
+                
+                do {
+                    next = next.nextSibling;
+                } while (next && !(next instanceof GeoExt.tree.LayerContainer && next.firstChild));
+                
+                if(next) {
+                    newRecordIndex = this.store.findBy(function(r) {
+                        return next.firstChild.layer === r.getLayer();
+                    });
+                }
+                newRecordIndex++;
+            } 
+        }*/
+        
+    },
     
     /** private: method[addLayers]
      *  :arg records: ``Array`` the layer records to add
@@ -86794,7 +86932,35 @@ gxp.plugins.AddLayers = Ext.extend(gxp.plugins.Tool, {
                     if(selectedNode && selectedNode instanceof GeoExt.tree.LayerContainer)
                     {
                         record.set("group", selectedNode.attributes.group);
-                        layerStore.add([record]);
+                        var leaf = {
+                            index:-1, 
+                            node:null, 
+                            isDescendant:false,
+                            founded: false
+                        };
+
+                        if(selectedNode.childNodes.length != 0){
+                            var newRecordIndex = layerStore.findBy(function(r) {
+                                    return selectedNode.childNodes[0].layer === r.getLayer();//find first child node (of selectedNode) which at the same time represent the layer that is in the top of all layers associated to selectedNode childs
+                            });
+                            layerStore.insert(newRecordIndex + 1, [record]);//inserting after the top layer, so it become the new top for selectedNode
+                        }
+                        else{
+                            this.getInsertPosition(layerStore, tree.root, selectedNode, leaf);
+                            if(leaf.index != -1){
+                                if(leaf.isDescendant)
+                                    layerStore.insert(leaf.index - 1, [record]);//inserting before next descendant layer
+                                else 
+                                    layerStore.insert(leaf.index + 1, [record]);//inserting after previous ancestor layer                           
+
+                            }
+                            else 
+                                layerStore.add([record]);
+                        }
+                         window.setTimeout(function() {
+                            selectedNode.reload();
+                        });
+                       
                     }
                     else {
                        layerStore.add([record]);
@@ -89016,8 +89182,7 @@ gxp.plugins.RemoveFolderGroup = Ext.extend(gxp.plugins.Tool, {
                     Ext.MessageBox.alert('Delete', 'You must remove its childs nodes first', function(){
                     });
                 }
-                else if(tree.root.childNodes[0].attributes.id == selectedNode.attributes.id ||
-                        tree.root.childNodes[1].attributes.id == selectedNode.attributes.id)
+                else if(selectedNode.attributes.group == "background")
                     Ext.MessageBox.alert('Delete', 'You can\'t remove ' +selectedNode.attributes.text, function(){
                     });   
                 else
@@ -89440,8 +89605,7 @@ gxp.plugins.AddFolder = Ext.extend(gxp.plugins.Tool, {
                                             }
                                         }
                                         else
-                                            tree.root.appendChild(node);                                            
-
+                                            tree.root.insertBefore(node,tree.root.firstChild);                                            
                                     }else{
                                         Ext.Msg.show({
                                              title: "New Folder",
@@ -89690,15 +89854,14 @@ gxp.plugins.AddGroup = Ext.extend(gxp.plugins.Tool, {
                                                         };
                                                     })(groupId),
                                                     createNode: function(attr) {
-                                                        //plugin.configureLayerNode(this, attr);
                                                         attr.uiProvider = LayerNodeUI;
                                                         attr.component = {
                                                             xtype: "gx_wmslegend",
-                                                            layerRecord: /*me != undefined ? me.mapPanel.layers.getByLayer(attr.layer) :*/ this.store.getByLayer(attr.layer),
+                                                            layerRecord: this.store.getByLayer(attr.layer),
                                                             showTitle: false,
                                                             // custom class for css positioning
                                                             // see tree-legend.html
-                                                            cls: "legend"
+                                                            cls: "legend" //currently this css class is used for hiding layer legend
                                                         }
                                                         return GeoExt.tree.LayerLoader.prototype.createNode.call(this, attr);                                                        
                                                     }
@@ -89730,7 +89893,7 @@ gxp.plugins.AddGroup = Ext.extend(gxp.plugins.Tool, {
                                             }
                                         }
                                         else
-                                            tree.root.appendChild(node);                                            
+                                            tree.root.insertBefore(node, tree.root.firstChild);                                            
                                     }else{
                                         Ext.Msg.show({
                                              title: "New Group",
