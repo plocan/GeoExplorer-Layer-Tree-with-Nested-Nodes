@@ -274,8 +274,18 @@ table.featureInfo caption{
     height: 16px;
 }
 
+.gxp-listmaps-icon {
+    background-image: url(img/silk/list-map-icon.png) !important;
+    width: 16px;
+    height: 16px;
+}
+
 .gxp-removefolder-icon {
     background-image: url(img/silk/folder-remove-icon.png) !important;
     width: 16px;
     height: 16px;
+}
+
+.legend{
+    display: none;
 }
