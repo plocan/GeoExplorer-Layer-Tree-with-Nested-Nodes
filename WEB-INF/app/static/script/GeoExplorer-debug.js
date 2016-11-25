@@ -50858,36 +50858,6 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
       
     },
 
-    /*addGroupsToTree: function(treeGroups){
-        var treeRoot = Ext.getCmp("layers").root; 
-        if(!treeGroups)
-            return;
-        for (var i = 0; i < treeGroups.childs.length; i++) {
-                var group = treeGroups.childs[i];
-                if(group.text == "Capa base" || group.text == "Capas superpuestas" || group.text == "Overlays" || group.text == "Base Maps")
-                    continue;
-                if(group.childs == undefined)
-                {}
-                else if (group.childs.length == 0) {
-                    //var sa = new Ext.tree.TreeNode({ text: group.text });
-                    var sa = this.createNodeGroup(group.text, treeRoot);
-                   // sa.expanded = true;                     
-                    //treeRoot.insertBefore(sa, treeRoot.firstChild.nextSibling);
-                    treeRoot.appendChild(sa);
-                }
-                else {
-                   // var sa = addLayerToGroup(tree[i].group, tree[i].title, map, panel, 'active' in tree[i]);
-                    //var sa = new Ext.tree.TreeNode({ text: group.text });
-                    var sa = this.createNodeGroup(group.text, treeRoot);
-                   // sa.expanded = true;
-                    this.addGroupsToTree(group);
-                    //treeRoot.insertBefore(sa, treeRoot.firstChild.nextSibling);
-                    treeRoot.appendChild(sa);
-                }
-        }
-        
-    },*/
-
     addGroupsToTree2: function(treeGroups, panel){
         var treeRoot = Ext.getCmp("layers").root; 
         var insertedFirstNode = false;
@@ -50974,7 +50944,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                                                     }
                                             }),
                                             singleClickExpand: true,
-                                            allowDrag: true,
+                                            allowDrag: (this.authorizedRoles && this.authorizedRoles.length === 0) ? false :true,
                                             listeners: {
                                                 append: function(tree, node) {
                                                     node.expand();
@@ -81537,7 +81507,7 @@ gxp.plugins.LayerTree = Ext.extend(gxp.plugins.Tool, {
             rootVisible: false,
             shortTitle: this.shortTitle,
             border: false,
-            enableDD: true,
+            enableDD: (this.target.authorizedRoles && this.target.authorizedRoles.length === 0) ? false :true,
             selModel: new Ext.tree.DefaultSelectionModel({
                 listeners: {
                     beforeselect: this.handleBeforeSelect,
