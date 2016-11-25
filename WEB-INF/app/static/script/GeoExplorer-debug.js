@@ -81620,31 +81620,22 @@ gxp.plugins.LayerTree = Ext.extend(gxp.plugins.Tool, {
             }
         }
     },
-    /*handleTreeContextMenu: function(node, e) {
-        if(node) {
-            node.select();
-            var tree = node.getOwnerTree();
-            if (tree.getSelectionModel().getSelectedNode() === node) {
-                var c = tree.contextMenu;
-                
-                var addGroupItem = c.getComponent("ext-gen203");// itemId from firebug
-                    
-                if(node.layer){
-                    addGroupItem.disable();                   
-                }
-                
-                c.contextNode = node;
-               
-                c.items.getCount() > 0 && c.showAt(e.getXY());
-            }
-        }        
-    },*/
+    
     
     /** private: method[handleBeforeMoveNode]
      */
     handleBeforeMoveNode: function(tree, node, oldParent, newParent, i) {
+        if(node instanceof GeoExt.tree.LayerContainer){
+             Ext.Msg.show({
+                title: "Alert",
+                msg: "Only layer nodes can be dragged and dropped",
+                buttons: Ext.Msg.OK,
+                icon: Ext.MessageBox.OK
+            });
+            return false;
+        }
         // change the group when moving to a new container
-        if(oldParent !== newParent) {
+        else if(oldParent !== newParent) {
             var store = newParent.loader.store;
             var index = store.findBy(function(r) {
                 return r.getLayer() === node.layer;
