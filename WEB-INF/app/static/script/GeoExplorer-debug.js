@@ -86949,9 +86949,9 @@ gxp.plugins.AddLayers = Ext.extend(gxp.plugins.Tool, {
                             this.getInsertPosition(layerStore, tree.root, selectedNode, leaf);
                             if(leaf.index != -1){
                                 if(leaf.isDescendant)
-                                    layerStore.insert(leaf.index - 1, [record]);//inserting before next descendant layer
+                                    layerStore.insert(leaf.index, [record]);//inserting before next descendant layer
                                 else 
-                                    layerStore.insert(leaf.index + 1, [record]);//inserting after previous ancestor layer                           
+                                    layerStore.insert(leaf.index - 1, [record]);//inserting before previous ancestor layer                           
 
                             }
                             else 
