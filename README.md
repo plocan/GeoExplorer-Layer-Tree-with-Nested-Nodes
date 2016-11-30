@@ -30,7 +30,8 @@ The proyect is still on developing to have any version yet.
 
 ## Authors
 
-* **Javier Velasco** - *Team manager* - javier.velasco@plocan.eu
+* **Tania Morales** - *Team manager* - tania.morales@plocan.eu
+* **Javier Gonzalez** - *Team revisions* - javier.gonzalez@plocan.eu
 * **José Díaz** - *Developer* - jose.diaz.ext@plocan.eu
 * **Daniel Álamo** - *Developer* - daniel.alamo.ext@plocan.eu
 
