@@ -1,0 +1,109 @@
+
+#
+# Utility function to check return values on commands
+#
+function checkrv {
+  if [ $1 -gt 0 ]; then
+    echo "$2 failed with return value $1"
+    exit 1
+  else
+    echo "$2 succeeded return value $1"
+  fi
+}
+
+# init_build_cat <cat>
+function init_build_cat {
+  if [ -z "$1" ]; then
+    echo -n "dev"
+  else
+    echo -n "$1"
+  fi
+}
+
+# init_build_cat <name>
+function init_build_name {
+  if [ -z "$1" ]; then
+    echo -n "latest"
+  else
+    echo -n "$1"
+  fi
+}
+
+# init_mvn_repo <name>
+function init_mvn_repo {
+  # set up the maven repository for this particular branch/tag/etc...
+  local name=$1
+  if [ -z "$name" ]; then
+    name="default"
+  fi
+  local mvn_root=$WORKSPACE/mvn/$name
+  local mvn_repo=$mvn_root/repo
+  local mvn_settings=$mvn_root/settings.xml
+  local mvn_settings_template=$WORKSPACE/mvn/settings.xml.in
+
+  if [ ! -d $mvn_root ]; then
+    mkdir -p $mvn_repo
+
+    if [ -e $mvn_settings_template ]; then
+      sed "s/@REPO_NAME@/$name/g" $mvn_settings_template > $mvn_settings
+    else
+      echo "<settings> 
+  <localRepository>$mvn_repo</localRepository>
+</settings>" > $mvn_settings
+    fi
+  fi
+
+  echo -n $mvn_settings
+}
+
+# get_rev <path>
+function get_rev {
+  local rev=`git log --format=format:%h | head -n 1`
+  if [ "x$rev" == "x" ]; then
+    echo "failed to get revision number from git info"
+    exit 1
+  fi
+
+  echo -n $rev
+}
+
+# get_last_built_rev <name>
+function get_last_built_rev {
+  local REVDIR=$WORKSPACE/revs
+
+  if [ ! -e $REVDIR ]; then
+    mkdir $REVDIR
+  fi
+
+  pushd $REVDIR > /dev/null
+  local REV="" 
+  if [ -e $1 ]; then 
+    REV=`cat $1`
+  fi
+  popd > /dev/null
+
+  echo -n $REV
+}
+
+# set_last_built_rev <name> <rev>
+function set_last_built_rev {
+  echo "$2" > $WORKSPACE/revs/$1
+}
+
+# get_submodule_rev <submodule_path>
+function get_submodule_rev {
+  local rev=`git submodule status $1 | sed 's/^..//' | cut -f 1 -d ' '`
+  echo -n $rev
+}
+
+# get_submodule_branch <submodule_path>
+function get_submodule_branch {
+  local branch=`git submodule status $1 | sed 's/^..//' | cut -f 3 -d ' ' | sed 's/(//g' | sed 's/)//g' | sed 's/.*\/\(.*\)/\1/g'`
+  echo -n $branch
+}
+
+# start_installer_job <job_url> <credentials>
+function start_installer_job {
+  local creds=build:$2
+   curl -k --connect-timeout 10 --user $creds "$1/buildWithParameters?CAT=${BUILD_CAT}&NAME=${BUILD_NAME}&BRANCH=${GIT_BRANCH}&REV=${GIT_COMMIT:0:7}&TOKEN=buildme"
+}
