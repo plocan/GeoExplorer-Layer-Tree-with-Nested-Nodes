@@ -189,7 +189,7 @@ gxp.plugins.LayerTree = Ext.extend(gxp.plugins.Tool, {
             rootVisible: false,
             shortTitle: this.shortTitle,
             border: false,
-            enableDD: (this.target.authorizedRoles && this.target.authorizedRoles.length === 0) ? false :true,
+            enableDD:  (this.target.authorizedRoles && this.target.authorizedRoles.length === 0) ? false :true,
             selModel: new Ext.tree.DefaultSelectionModel({
                 listeners: {
                     beforeselect: this.handleBeforeSelect,
@@ -259,9 +259,12 @@ gxp.plugins.LayerTree = Ext.extend(gxp.plugins.Tool, {
      
     /** private: method[handleTreeContextMenu]
      */
-    handleTreeContextMenu: function(node, e) {
+      handleTreeContextMenu: function(node, e) {
+
         if(node /*&& node.layer*/) {
+
             node.select();
+
             var tree = node.getOwnerTree();
             if (tree.getSelectionModel().getSelectedNode() === node) {
                 var c = tree.contextMenu;
@@ -305,7 +308,7 @@ gxp.plugins.LayerTree = Ext.extend(gxp.plugins.Tool, {
     /** private: method[handleBeforeMoveNode]
      */
     handleBeforeMoveNode: function(tree, node, oldParent, newParent, i) {
-          if(node instanceof GeoExt.tree.LayerContainer){
+        if(node instanceof GeoExt.tree.LayerContainer){
              Ext.Msg.show({
                 title: "Alert",
                 msg: "Only layer nodes can be dragged and dropped",
@@ -316,8 +319,7 @@ gxp.plugins.LayerTree = Ext.extend(gxp.plugins.Tool, {
         }
         // change the group when moving to a new container
         else if(oldParent !== newParent) {
-        // change the group when moving to a new container
-        
+
             var store = newParent.loader.store;
             var index = store.findBy(function(r) {
                 return r.getLayer() === node.layer;
@@ -328,5 +330,4 @@ gxp.plugins.LayerTree = Ext.extend(gxp.plugins.Tool, {
     }
         
 });
-
 Ext.preg(gxp.plugins.LayerTree.prototype.ptype, gxp.plugins.LayerTree);

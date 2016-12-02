@@ -309,6 +309,7 @@ GeoExt.Lang.add("en", {
     },
     
     "gxp.WMSLayerPanel.prototype": {
+        attributionText: "Attribution",
         aboutText: "关于",
         titleText: "标题",
         nameText: "名字",
@@ -369,7 +370,9 @@ GeoExt.Lang.add("en", {
          styleWindowTitle: "用户式样: {0}",
          ruleWindowTitle: "式样规则: {0}",
          stylesFieldsetTitle: "式样",
-         rulesFieldsetTitle: "规则"
+         rulesFieldsetTitle: "规则",
+         classifyStyleText: "Classify",
+         classifyStyleTip: "Classify the layer based on attributes"
     },
 
     "gxp.LayerUploadPanel.prototype": {

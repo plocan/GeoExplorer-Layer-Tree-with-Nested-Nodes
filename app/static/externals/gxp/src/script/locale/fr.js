@@ -59,7 +59,7 @@ GeoExt.Lang.add("fr", {
 
     "gxp.plugins.LayerProperties.prototype": {
         menuText: "Propriétés de la couche",
-        toolTip: "Propriétés de la couche"
+        toolTip: "Afficher les propriétés de la couche"
     },
     
     "gxp.plugins.LayerTree.prototype": {
@@ -75,28 +75,28 @@ GeoExt.Lang.add("fr", {
 
     "gxp.plugins.Legend.prototype": { 
         menuText: "Légende",
-        tooltip: "Légende"
+        tooltip: "Afficher la légende"
     },
 
     "gxp.plugins.Measure.prototype": {
         buttonText: "Mesure",
         lengthMenuText: "Longueur",
         areaMenuText: "Surface",
-        lengthTooltip: "Mesure de longueur",
-        areaTooltip: "Mesure de surface",
-        measureTooltip: "Mesure"
+        lengthTooltip: "Mesurer une longueur",
+        areaTooltip: "Mesurer une surface",
+        measureTooltip: "Mesurer"
     },
 
     "gxp.plugins.Navigation.prototype": {
-        menuText: "Panner la carte",
-        tooltip: "Panner la carte"
+        menuText: "Panner",
+        tooltip: "Faire glisser la carte"
     },
 
     "gxp.plugins.NavigationHistory.prototype": {
         previousMenuText: "Position précédente",
         nextMenuText: "Position suivante",
-        previousTooltip: "Position précédente",
-        nextTooltip: "Position suivante"
+        previousTooltip: "Retourner à la position précédente",
+        nextTooltip: "Aller à la position suivante"
     },
 
     "gxp.plugins.LoadingIndicator.prototype": {
@@ -166,9 +166,9 @@ GeoExt.Lang.add("fr", {
         zoomMenuText: "Zoom Box",
         zoomInMenuText: "Zoom avant",
         zoomOutMenuText: "Zoom arrière",
-        zoomTooltip: "Zoom by dragging a box",
-        zoomInTooltip: "Zoom avant",
-        zoomOutTooltip: "Zoom arrière"
+        zoomTooltip: "Zoomer en dessinant un rectangle",
+        zoomInTooltip: "Zoomer",
+        zoomOutTooltip: "Dézoomer"
     },
     
     "gxp.plugins.ZoomToExtent.prototype": {
@@ -274,6 +274,7 @@ GeoExt.Lang.add("fr", {
     },
     
     "gxp.WMSLayerPanel.prototype": {
+        attributionText: "Attribution",
         aboutText: "A propos",
         titleText: "Titre",
         nameText: "Nom",
@@ -308,6 +309,35 @@ GeoExt.Lang.add("fr", {
         smallSizeLabel: 'Petit',
         premiumSizeLabel: 'Premium',
         largeSizeLabel: 'Large'
+    },
+
+    "gxp.WMSStylesDialog.prototype": {
+         addStyleText: "Add",
+         addStyleTip: "Add a new style",
+         chooseStyleText: "Choose style",
+         deleteStyleText: "Remove",
+         deleteStyleTip: "Delete the selected style",
+         editStyleText: "Edit",
+         editStyleTip: "Edit the selected style",
+         duplicateStyleText: "Duplicate",
+         duplicateStyleTip: "Duplicate the selected style",
+         addRuleText: "Add",
+         addRuleTip: "Add a new rule",
+         newRuleText: "New Rule",
+         deleteRuleText: "Remove",
+         deleteRuleTip: "Delete the selected rule",
+         editRuleText: "Edit",
+         editRuleTip: "Edit the selected rule",
+         duplicateRuleText: "Duplicate",
+         duplicateRuleTip: "Duplicate the selected rule",
+         cancelText: "Cancel",
+         saveText: "Save",
+         styleWindowTitle: "User Style: {0}",
+         ruleWindowTitle: "Style Rule: {0}",
+         stylesFieldsetTitle: "Styles",
+         rulesFieldsetTitle: "Rules",
+         classifyStyleText: "Classify",
+         classifyStyleTip: "Classify the layer based on attributes"
     },
 
     "gxp.LayerUploadPanel.prototype": {
@@ -357,6 +387,35 @@ GeoExt.Lang.add("fr", {
         doneText: "Terminé",
         titletext:  "Ajouter RSS",
         maxResultsText: "Articles Max"
+    },
+
+    "gxp.ClassificationPanel.prototype": {
+        classNumberText: 'Classes',
+        classifyText: "Classify",
+        rampBlueText: "Blue",
+        rampRedText: "Red",
+        rampOrangeText: "Orange",
+        rampJetText: "Blue-Red",
+        rampGrayText: "Gray",
+        rampRandomText: "Random",
+        rampCustomText: "Custom",
+        selectColorText: "Select colors",
+        colorStartText: "Start Color",
+        colorEndText: "End Color",
+        colorRampText: 'Color Ramp',
+        methodText: "Method",
+        methodUniqueText: "Unique Values",
+        methodQuantileText: "Quantile",
+        methodEqualText: "Equal Intervals",
+        methodJenksText: "Jenks Natural Breaks",
+        selectMethodText: "Select method",
+        standardDeviationText: "Standard Deviations",
+        attributeText: "Attribute",
+        selectAttributeText: "Select attribute",
+        startColor: "#FEE5D9",
+        endColor: "#A50F15",
+        generateRulesText: "Apply",
+        reverseColorsText: "Reverse colors"
     }
 
 });

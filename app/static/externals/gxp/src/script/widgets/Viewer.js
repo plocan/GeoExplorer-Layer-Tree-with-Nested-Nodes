@@ -231,6 +231,11 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
              *  Fires when application is ready for user interaction.
              */
             "ready",
+
+            /** api: event[beforecreateportal]
+             *  Fires before the portal is created by the Ext ComponentManager.
+             */
+            "beforecreateportal",
             
             /** api: event[portalready]
              *  Fires after the portal is initialized.
@@ -454,6 +459,8 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
         var mapConfig = {};
         var baseLayerConfig = {
             wrapDateLine: config.wrapDateLine !== undefined ? config.wrapDateLine : true,
+            minZoomLevel: config.minZoomLevel,
+            maxZoomLevel: config.maxZoomLevel,
             maxResolution: config.maxResolution,
             numZoomLevels: config.numZoomLevels,
             displayInLayerSwitcher: false
@@ -538,7 +545,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                 } catch (err) {
                     throw new Error("Could not create tool plugin with ptype: " + this.initialConfig.tools[i].ptype);
                 }
-                if(this.authorizedRoles && this.authorizedRoles.length === 0){//if not user logged in
+		if(this.authorizedRoles && this.authorizedRoles.length === 0){//if not user logged in
                     if(this.initialConfig.tools[i].autoActivate != undefined && !this.initialConfig.tools[i].autoActivate)//if tool is deactivated
                     {}
                     else
@@ -558,6 +565,8 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
             this.mapPanel.region = "center";
             this.portalItems.push(this.mapPanel);
         }
+
+        this.fireEvent("beforecreateportal");
         
         this.portal = Ext.ComponentMgr.create(Ext.applyIf(config, {
             layout: "fit",
@@ -586,7 +595,8 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
         this.fireEvent("ready");
     },
     
-    addLayers: function() {
+   addLayers: function() {
+        
         var mapConfig = this.initialConfig.map;
         if(mapConfig && mapConfig.layers) {
             var conf, source, record, baseRecords = [], overlayRecords = [];
@@ -616,8 +626,10 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                 panel.layers.add(records);
             }
             this.addGroupsToTree2(this.initialConfig.treeGroupStructure, panel);  
-            
-        }        
+
+        }  
+
+      
     },
 
     addGroupsToTree2: function(treeGroups, panel){
@@ -852,6 +864,89 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
         }
     },
 
+    listLayerGroups: function(node, jsonTreeGroups,  parent){
+
+        var leaf;
+        if(!parent.childs)
+            parent.childs = [];
+        
+
+        
+        var i;
+        for(i = 0;i < node.childNodes.length;i++)
+        {
+            var subnode = node.childNodes[i];
+            
+
+            if(subnode.childNodes.length != 0){
+                
+
+                this.listLayerGroups(subnode, jsonTreeGroups,  parent);
+
+                parent.text = subnode.text;
+                console.log(subnode.attributes.text);
+
+                var copy = {};
+                Ext.apply(copy, parent);
+
+
+                parent = {
+                    text: "",
+                    childs:""
+                };    
+
+
+                if(!jsonTreeGroups.childs[node.text]){
+                    jsonTreeGroups.childs[node.text] = {
+                        text: node.text,
+                        childs:[]
+                    };
+                }
+                
+                jsonTreeGroups.childs[node.text].childs.push(copy);                           
+                
+            }
+            else if(subnode.leaf)
+            {
+                if(subnode.text){
+                    console.log(subnode.text);
+                
+                    leaf = {
+                        text:subnode.text
+                    }; 
+                    parent.childs.push(leaf);
+                }
+            }
+            else
+            {
+               parent.text = subnode.text;
+               parent.childs = [];
+               console.log(subnode.attributes.text);
+               var copy = {};
+               Ext.apply(copy, parent);
+
+               if(!jsonTreeGroups.childs[subnode.text])
+                    jsonTreeGroups.childs[node.text] = {
+                        text: node.text,
+                        childs:[]
+                    };
+               
+               jsonTreeGroups.childs[subnode.text].childs.push(copy);
+              
+                parent = {
+                    text: "",
+                    childs:""
+                };              
+            }     
+                    
+        }    
+        parent = {
+                    text: "",
+                    childs:""
+                };        
+    },
+
+
     /** private: method[getState]
      *  :returns: ``Object`` Representation of the app's current state.
      */ 
@@ -868,7 +963,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
             layers: []
         });
 
-         /////////////
+	  /////////////
         var treeRoot = Ext.getCmp("layers").root;  
         //console.log(treeRoot.childNodes);
         var jsonTreeGroups = {
@@ -899,7 +994,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                 }
             }
         }, this);
-
+	
         state.treeGroupStructure = jsonTreeGroups;
 
         // update sources, adding new ones
@@ -1065,7 +1160,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                 callback: function(request) {
                     this.handleSave(request);
                     if (callback) {
-                        callback.call(scope || this);
+                        callback.call(scope || this, request);
                     }
                 },
                 scope: this

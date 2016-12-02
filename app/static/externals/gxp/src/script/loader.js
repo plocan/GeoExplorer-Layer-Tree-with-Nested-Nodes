@@ -54,7 +54,6 @@
         "widgets/form/PlaybackModeComboBox.js",
         "widgets/PlaybackOptionsPanel.js",
         "widgets/slider/ClassBreakSlider.js",
-        "widgets/tips/RangeSliderTip.js",
         "widgets/TimelinePanel.js",
         "widgets/form/CSWFilterField.js",
         "widgets/CatalogueSearchPanel.js",
@@ -96,7 +95,7 @@
         "plugins/LayerManager.js",
         "plugins/AddLayers.js",
         "plugins/RemoveLayer.js",
-        "plugins/AddGroup.js",
+	"plugins/AddGroup.js",
         "plugins/AddFolder.js",
         "plugins/RenameFolderGroup.js",
         "plugins/RemoveFolderGroup.js",
@@ -118,6 +117,7 @@
         "plugins/Print.js",
         "plugins/LoadingIndicator.js",
         "plugins/Playback.js",
+        "ColorManager.js",
         "locale/es.js",
         "locale/ca.js"
     );

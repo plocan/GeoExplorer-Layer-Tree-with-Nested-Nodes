@@ -127,7 +127,7 @@ GeoExt.MapPanel = Ext.extend(Ext.Panel, {
     initComponent: function(){
         if(!(this.map instanceof OpenLayers.Map)) {
             this.map = new OpenLayers.Map(
-                Ext.applyIf(this.map || {}, {allOverlays: true})
+                Ext.applyIf(this.map || {}, {allOverlays: true, fallThrough: true})
             );
         }
         var layers = this.layers;
@@ -256,8 +256,12 @@ GeoExt.MapPanel = Ext.extend(Ext.Panel, {
         // if we get strings for state.x, state.y or state.zoom
         // OpenLayers will take care of converting them to the
         // appropriate types so we don't bother with that
-        this.center = new OpenLayers.LonLat(state.x, state.y);
-        this.zoom = state.zoom;
+        if('x' in state && 'y' in state) {
+            this.center = new OpenLayers.LonLat(state.x, state.y);
+        }
+        if('zoom' in state) {
+            this.zoom = state.zoom;
+        }
 
         // set layer visibility and opacity
         var i, l, layer, layerId, visibility, opacity;
