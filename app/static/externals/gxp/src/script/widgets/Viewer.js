@@ -545,7 +545,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                 } catch (err) {
                     throw new Error("Could not create tool plugin with ptype: " + this.initialConfig.tools[i].ptype);
                 }
-		if(this.authorizedRoles && this.authorizedRoles.length === 0){//if not user logged in
+        if(this.authorizedRoles && this.authorizedRoles.length === 0){//if not user logged in
                     if(this.initialConfig.tools[i].autoActivate != undefined && !this.initialConfig.tools[i].autoActivate)//if tool is deactivated
                     {}
                     else
@@ -719,7 +719,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                                                     }
                                             }),
                                             singleClickExpand: true,
-                                            allowDrag: (this.authorizedRoles && this.authorizedRoles.length === 0) ? false :true,
+                                            allowDrag:false,
                                             listeners: {
                                                 append: function(tree, node) {
                                                     node.expand();
@@ -963,7 +963,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
             layers: []
         });
 
-	  /////////////
+      /////////////
         var treeRoot = Ext.getCmp("layers").root;  
         //console.log(treeRoot.childNodes);
         var jsonTreeGroups = {
@@ -994,7 +994,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                 }
             }
         }, this);
-	
+    
         state.treeGroupStructure = jsonTreeGroups;
 
         // update sources, adding new ones

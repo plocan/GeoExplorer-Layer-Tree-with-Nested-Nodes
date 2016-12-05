@@ -23,14 +23,15 @@ GeoExplorer.Viewer = Ext.extend(GeoExplorer, {
     constructor: function(config) {
         // Starting with this.authorizedRoles being undefined, which means no
         // authentication service is available
-        if (config.authStatus === 401) {
+        /*if (config.authStatus === 401) {
             // user has not authenticated or is not authorized
             this.authorizedRoles = [];
         } else if (config.authStatus !== 404) {
             // user has authenticated
             this.authorizedRoles = ["ROLE_ADMINISTRATOR"];
-        }
+        }*/
         // should not be persisted or accessed again
+    this.authorizedRoles = [];
         delete config.authStatus;
 
         config.tools = [
