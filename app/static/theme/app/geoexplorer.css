@@ -289,3 +289,8 @@ table.featureInfo caption{
 .legend{
     display: none;
 }
+
+.icon-plocan {
+    background-image: url(img/plocan.png);
+    padding-left: 27px !important;
+}
