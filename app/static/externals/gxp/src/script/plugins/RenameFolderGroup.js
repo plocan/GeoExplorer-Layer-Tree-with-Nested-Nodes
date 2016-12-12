@@ -59,6 +59,7 @@ gxp.plugins.RenameFolderGroup = Ext.extend(gxp.plugins.Tool, {
             iconCls: "gxp-rename-icon",
             disabled: false,
             tooltip: this.renameFolderGroupActionTip,
+	    itemId: "renameFolderGroup",
             handler: function() {
                 
                 var enableBtnFunction = function(){

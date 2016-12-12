@@ -54,6 +54,7 @@ gxp.plugins.RemoveFolderGroup = Ext.extend(gxp.plugins.Tool, {
             iconCls: "gxp-removefolder-icon",
             disabled: false,
             tooltip: this.removeFolderGroupActionTip,
+	    itemId: "removeFolderGroup",
             handler: function() {
                 
                 var enableBtnFunction = function(){

@@ -62,6 +62,7 @@ gxp.plugins.AddGroup = Ext.extend(gxp.plugins.Tool, {
             iconCls: "gxp-icon-addgroup",
             disabled: false,
             tooltip: this.addGroupActionTip,
+	    itemId: "addGroup",
             handler: function() {
                 
                 var enableBtnFunction = function(){

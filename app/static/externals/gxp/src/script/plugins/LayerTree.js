@@ -270,10 +270,10 @@ gxp.plugins.LayerTree = Ext.extend(gxp.plugins.Tool, {
                 var c = tree.contextMenu;
                 c.contextNode = node;
 
-                var addGroupItem = c.getComponent("ext-gen210");// itemId from firebug
-                var renameFolderGroupItem = c.getComponent("ext-gen216");
-                var addFolderItem = c.getComponent("ext-gen213");
-                var removeFolderGroupItem = c.getComponent("ext-gen217");
+                var addGroupItem = c.getComponent("addGroup");// itemId from firebug
+                var renameFolderGroupItem = c.getComponent("renameFolderGroup");
+                var addFolderItem = c.getComponent("addFolder");
+                var removeFolderGroupItem = c.getComponent("removeFolderGroup");
                 
                 addGroupItem.disable(); 
                 addFolderItem.disable();

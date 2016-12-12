@@ -60,6 +60,7 @@ gxp.plugins.AddFolder = Ext.extend(gxp.plugins.Tool, {
             iconCls: "gxp-folder-icon",
             disabled: false,
             tooltip: this.addFolderActionTip,
+	    itemId: "addFolder",
             handler: function() {
                 
                 var enableBtnFunction = function(){
