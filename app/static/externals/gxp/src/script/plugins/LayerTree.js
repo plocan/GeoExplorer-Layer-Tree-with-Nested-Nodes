@@ -98,7 +98,7 @@ gxp.plugins.LayerTree = Ext.extend(gxp.plugins.Tool, {
         gxp.plugins.LayerTree.superclass.constructor.apply(this, arguments);
         if (!this.groups) {
             this.groups = {
-                "default": this.overlayNodeText,
+                //"default": this.overlayNodeText,
                 "background": {
                     title: this.baseNodeText,
                     exclusive: true
