@@ -280,7 +280,18 @@ Ext.extend(GeoExt.tree.LayerLoader, Ext.util.Observable, {
                     oldParent.reload();
                 });
             } else {
-                this.store.insert(oldRecordIndex, [record]);
+                Ext.Msg.show({
+                    title: "Alert message",
+                         msg: "You can't drop a layer here. Press ok button to reload page and avoid errors",
+                         buttons: Ext.Msg.OK,
+                         icon: Ext.MessageBox.OK,
+                         fn: function(){
+                            window.location.reload();
+                         },
+                         modal: true
+                });
+                return false;
+                //this.store.insert(oldRecordIndex, [record]);
             }
             delete newParent.loader._reordering;
         }
