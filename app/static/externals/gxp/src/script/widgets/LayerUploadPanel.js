@@ -152,6 +152,17 @@ gxp.LayerUploadPanel = Ext.extend(Ext.FormPanel, {
         this.buttons = [{
             text: this.uploadText,
             handler: function() {
+                var tree = Ext.getCmp("layers"); 
+                var selectedNode = tree.getSelectionModel().getSelectedNode();
+                if(!selectedNode || ! selectedNode instanceof GeoExt.tree.LayerContainer){
+                    Ext.Msg.show({
+                    title: "Alert message",
+                         msg: "A Layer Container node has to be selected in order to add a layer",
+                         buttons: Ext.Msg.OK,
+                         icon: Ext.MessageBox.OK
+                    });
+                    return false;
+                }
                 var form = this.getForm();
                 if (form.isValid()) {
                     var fields = form.getFieldValues(),

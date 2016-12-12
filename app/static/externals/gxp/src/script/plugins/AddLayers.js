@@ -767,7 +767,18 @@ gxp.plugins.AddLayers = Ext.extend(gxp.plugins.Tool, {
                         extent.extend(record.getLayer().maxExtent);
                     }
                 }
-                if (record.get("group") === "background") {
+                var tree = Ext.getCmp("layers"); 
+                var selectedNode = tree.getSelectionModel().getSelectedNode();
+                if(!selectedNode || ! selectedNode instanceof GeoExt.tree.LayerContainer){
+                    Ext.Msg.show({
+                    title: "Alert message",
+                         msg: "A Layer Container node has to be selected in order to add a layer",
+                         buttons: Ext.Msg.OK,
+                         icon: Ext.MessageBox.OK
+                    });
+                    return false;
+                }
+                else if (record.get("group") === "background") {
                     // layer index 0 is the invisible base layer, so we insert
                     // at position 1.
                     layerStore.insert(1, [record]);
