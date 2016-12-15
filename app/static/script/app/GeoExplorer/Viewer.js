@@ -20,22 +20,24 @@ GeoExplorer.Viewer = Ext.extend(GeoExplorer, {
 
 
 
-    constructor: function(config) {
-        // Starting with this.authorizedRoles being undefined, which means no
-        // authentication service is available
-        /*if (config.authStatus === 401) {
-            // user has not authenticated or is not authorized
-            this.authorizedRoles = [];
-        } else if (config.authStatus !== 404) {
-            // user has authenticated
-            this.authorizedRoles = ["ROLE_ADMINISTRATOR"];
-        }*/
-        // should not be persisted or accessed again
-    this.authorizedRoles = [];
-        delete config.authStatus;
-
-        config.tools = [
-            {
+  applyConfig: function(config) {
+        var allTools = config.viewerTools || this.viewerTools;
+        var tools = [];
+        var toolConfig;
+        for (var i=0, len=allTools.length; i<len; i++) {
+            var tool = allTools[i];
+            if (tool.checked === true) {
+                var properties = ['checked', 'iconCls', 'id', 'leaf', 'loader', 'text'];
+                for (var key in properties) {
+                    delete tool[properties[key]];
+                }
+                toolConfig = Ext.applyIf({
+                    actionTarget: "paneltbar"
+                }, tool);
+                tools.push(toolConfig);
+            }
+        }
+        tools.push({
                 ptype: "gxp_layermanager",
                 outputConfig: {
                     id: "layers",
@@ -43,82 +45,12 @@ GeoExplorer.Viewer = Ext.extend(GeoExplorer, {
                     autoScroll: true
                 },
                 outputTarget: "tree"
-            }, {
-                ptype: "gxp_zoomtolayerextent",
-                actionTarget: {target: "layers.contextMenu", index: 0}
-            }, {
-                ptype: "gxp_googleearth",
-                actionTarget: ["map.tbar", "globe.tbar"]
-            }, {
-                ptype: "gxp_navigation", toggleGroup: "navigation"
-            }, {
-                ptype: "gxp_zoom", toggleGroup: "navigation",
-                showZoomBoxAction: true,
-                controlOptions: {zoomOnClick: false}
-            }, {
-                ptype: "gxp_navigationhistory"
-            }, {
-                ptype: "gxp_zoomtoextent"
-            }, {
-                actions: ["aboutbutton"],  actionTarget: "paneltbar"
-            }, {
-                actions: ["-"], actionTarget: "paneltbar"
-            }, {
-                ptype: "gxp_print",
-                customParams: {outputFilename: 'GeoExplorer-print'},
-                printService: config.printService,
-                actionTarget: "paneltbar",
-                showButtonText: true
-            }, {
-                actions: ["-"],
-                actionTarget: "paneltbar"
-            }, {
-                ptype: "gxp_wmsgetfeatureinfo", format: 'grid',
-                toggleGroup: "interaction",
-                showButtonText: true,
-                actionTarget: "paneltbar"
-            }, {
-                ptype: "gxp_featuremanager",
-                id: "querymanager",
-                selectStyle: {cursor: ''},
-                autoLoadFeatures: true,
-                maxFeatures: 50,
-                paging: true,
-                pagingType: gxp.plugins.FeatureManager.WFS_PAGING
-            }, {
-                ptype: "gxp_queryform",
-                featureManager: "querymanager",
-                autoExpand: "query",
-                actionTarget: "paneltbar",
-                outputTarget: "query",
-                autoActivate: false
-            }, {
-                ptype: "gxp_featuregrid",
-                featureManager: "querymanager",
-                showTotalResults: true,
-                autoLoadFeature: false,
-                alwaysDisplayOnMap: true,
-                controlOptions: {multiple: true},
-                displayMode: "selected",
-                outputTarget: "table",
-                outputConfig: {
-                    id: "featuregrid",
-                    columnsSortable: false
-                }
-            }, {
-                ptype: "gxp_zoomtoselectedfeatures",
-                featureManager: "querymanager",
-                actionTarget: ["featuregrid.contextMenu", "featuregrid.bbar"]
-            }, {
-                ptype: "gxp_measure", toggleGroup: "interaction",
-                controlOptions: {immediate: true},
-                showButtonText: true,
-                actionTarget: "paneltbar"
-            }
-        ];
+            });
         
-        GeoExplorer.Composer.superclass.constructor.apply(this, arguments);
+        config.tools = tools;
+        GeoExplorer.Viewer.superclass.applyConfig.call(this, config);
     },
+    
     
     loadConfig: function(config) {
         GeoExplorer.Composer.superclass.loadConfig.apply(this, arguments);

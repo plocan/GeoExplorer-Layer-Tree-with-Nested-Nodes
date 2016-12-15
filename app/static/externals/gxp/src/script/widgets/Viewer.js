@@ -679,7 +679,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
                                             text: nodeName,
                                             allowDrag: false,
                                             draggable: false,
-                                            expanded: this.authorizedRoles.length != 0 ? true:false
+                                            expanded: false
                                         });
                                         
         return node;
@@ -692,7 +692,7 @@ gxp.Viewer = Ext.extend(Ext.util.Observable, {
         var node = new GeoExt.tree.LayerContainer({
                                             text: nodeName,
                                             iconCls: "gxp-folder",
-                                            expanded: this.authorizedRoles.length != 0 ? true:false,
+                                            expanded: false,
                                             //checked: false,
                                             group: groupName,
                                             loader: new GeoExt.tree.LayerLoader({
