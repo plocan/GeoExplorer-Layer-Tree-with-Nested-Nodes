@@ -82,7 +82,7 @@ OpenLayers.Control.Attribution =
      * Update attribution string.
      */
     updateAttribution: function() {
-        var attributions = [];
+        var attributions = ["<div style='margin-left:0px;margin-right:0px;z-index:1000000;position:absolute;left:0px;bottom:40px;'><a href='http://www.plocan.eu/' target='_blank' style='position: static; overflow: visible; float: none; display: inline;'><div style='width:350px;cursor:pointer;'><img src='../theme/app/img/plocan-logo.png' style='width:350px;-webkit-user-select:none;border:0px;'></div></a></div>"];
         if (this.map && this.map.layers) {
             for(var i=0, len=this.map.layers.length; i<len; i++) {
                 var layer = this.map.layers[i];
