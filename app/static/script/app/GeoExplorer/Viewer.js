@@ -24,7 +24,7 @@ GeoExplorer.Viewer = Ext.extend(GeoExplorer, {
         var allTools = config.viewerTools || this.viewerTools;
         var tools = [];
         var toolConfig;
-        for (var i=0, len=allTools.length; i<len; i++) {
+        for (var i=1, len=allTools.length; i<len; i++) {
             var tool = allTools[i];
             if (tool.checked === true) {
                 var properties = ['checked', 'iconCls', 'id', 'leaf', 'loader', 'text'];
@@ -292,7 +292,7 @@ GeoExplorer.Viewer = Ext.extend(GeoExplorer, {
         GeoExplorer.Viewer.superclass.createTools.apply(this, arguments);
         
         Ext.getCmp("aboutbutton")
-            .setText("Plocan")
+            .setText("")
             .setIconClass('icon-plocan');    
     
     }
