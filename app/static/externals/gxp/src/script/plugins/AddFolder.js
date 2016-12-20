@@ -41,13 +41,15 @@ gxp.plugins.AddFolder = Ext.extend(gxp.plugins.Tool, {
     
     addFolderDialogTitle: "New Folder",
     
-    addFolderFieldSetText: "Folder Name",
+    addFolderFieldSetText: "Folder Info",
     
-    addFolderFieldLabel: "New Folder",
+    addFolderFieldLabel: "Folder Name",
     
     addFolderButtonText: "Add Folder",
     
     addFolderMsg: "Please enter a folder name",
+
+    addFolderPositionLabel: "Select a position",
 
     /** 
      * api: method[addActions]
@@ -103,7 +105,7 @@ gxp.plugins.AddFolder = Ext.extend(gxp.plugins.Tool, {
                                         xtype: 'combo',
                                         width: 120,
                                         id:'diag-combobox',
-                                        fieldLabel: 'Select a Position',
+                                        fieldLabel: this.addFolderPositionLabel,
                                         store: new Ext.data.SimpleStore({
                                             data: [
                                                 ['before', 'before'],

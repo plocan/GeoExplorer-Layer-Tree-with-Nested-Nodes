@@ -39,9 +39,13 @@ gxp.plugins.RemoveFolderGroup = Ext.extend(gxp.plugins.Tool, {
     
     removeFolderGroupDialogTitle: "Remove Folder or Group",
     
-    addFolderButtonText: "Remove",
+    removeFolderGroupButtonText: "Remove",
     
     removeFolderGroupMsg: "Are you sure you want to delete this node? Please confirm the removal of ",
+
+    removeFolderGroupMsg1: "You must remove its childs nodes first",
+    
+    removeFolderGroupMsg2: "You can\'t remove ",
 
     /** 
      * api: method[removeActions]
@@ -71,15 +75,15 @@ gxp.plugins.RemoveFolderGroup = Ext.extend(gxp.plugins.Tool, {
                 //if it is a tree node with childs
                 if(!(selectedNode instanceof GeoExt.tree.LayerContainer) && selectedNode.childNodes.length != 0)
                 {
-                    Ext.MessageBox.alert('Delete', 'You must remove its childs nodes first', function(){
+                    Ext.MessageBox.alert(this.removeFolderGroupButtonText, this.removeFolderGroupMsg1, function(){
                     });
                 }
                 else if(selectedNode.attributes.group == "background")
-                    Ext.MessageBox.alert('Delete', 'You can\'t remove ' +selectedNode.attributes.text, function(){
+                    Ext.MessageBox.alert(this.removeFolderGroupButtonText, this.removeFolderGroupMsg2 +selectedNode.attributes.text, function(){
                     });   
                 else
                 {
-                    Ext.MessageBox.confirm('Delete', this.removeFolderGroupMsg + selectedNode.attributes.text, function(btn){
+                    Ext.MessageBox.confirm(this.removeFolderGroupButtonText, this.removeFolderGroupMsg + selectedNode.attributes.text, function(btn){
                        if(btn === 'yes'){
                            var layer;
                            for(var i = 0;i < layers.data.length;i++)

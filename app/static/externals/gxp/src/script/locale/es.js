@@ -24,6 +24,58 @@ GeoExt.Lang.add("es", {
         addFeedActionMenuText: "Add feeds",
         searchText: "Search for layers"
     },
+
+    "gxp.plugins.AddGroup.prototype": {
+        addGroupMenuText: "Añadir Contenedor",
+        addGroupActionTip: "Añadir un nuevo Contenedor",
+        addGroupDialogTitle: "Nuevo Contenedor",
+        addGroupFieldSetText: "Datos del Contenedor",
+        addGroupFieldLabel: "Nuevo Contenedor",
+        addGroupMsg: "Por favor escriba un nombre",
+        addGroupButtonText: "Añadir Contenedor",        
+        addGroupPositionLabel: "Posición"        
+    },
+    
+    "gxp.plugins.AddFolder.prototype": {
+        addFolderMenuText: "Añadir Carpeta",
+        addFolderActionTip: "Añadir nueva Carpeta",
+        addFolderDialogTitle: "Nueva Carpeta",
+        addFolderFieldSetText: "Datos de la Carpeta",
+        addFolderFieldLabel: "Nueva Carpeta",
+        addFolderMsg: "Por favor escriba un nombre",
+        addFolderButtonText: "Añadir Carpeta",
+        addFolderPositionLabel: "Posición"        
+    },
+
+    "gxp.plugins.RenameFolderGroup.prototype": {
+        renameFolderGroupMenuText: "Renombrar",
+        renameFolderGroupActionTip: "Renombrar Carpeta o Contenedor",
+        renameFolderGroupDialogTitle: "Renombrar Carpeta o Contenedor",
+        renameFolderGroupFieldSetText: "Nombre",
+        renameFolderGroupFieldLabel: "Nuevo nombre",
+        renameFolderGroupButtonText: "Cambiar nombre",
+        renameFolderGroupMsg: "Entre un nombre"
+    },
+
+    "gxp.plugins.RemoveFolderGroup.prototype": {
+        removeFolderGroupMenuText: "Eliminar",
+        removeFolderGroupActionTip: "Eliminar Carpeta o Contenedor",
+        removeFolderGroupDialogTitle: "Eliminar Carpeta o Contenedor",
+        removeFolderGroupButtonText: "Eliminar",
+        removeFolderGroupMsg: "¿Desea eliminar este nodo? Confirme el borrado de ",
+        removeFolderGroupMsg1: "Debe eliminar sus nodos hijos primero",
+        removeFolderGroupMsg2: "No puede eliminar "
+    },
+
+    "gxp.plugins.SavedMaps.prototype": {
+        savedMapsMenuText: "Mostrar mapas salvados",
+        savedMapsActionTip: "Mostrar lista de mapas salvados",
+        savedMapsDialogTitle: "Mapas salvados",
+        savedMapsButtonText: "Eliminar mapa",
+        savedMapsMsg: "¿Está seguro de eliminar el mapa de id ?",
+        savedMapsCreatedColumn: "Creado",
+        savedMapsModifiedColumn :"Modificado"
+    },
     
     "gxp.plugins.BingSource.prototype": {
         title: "Capas Bing",

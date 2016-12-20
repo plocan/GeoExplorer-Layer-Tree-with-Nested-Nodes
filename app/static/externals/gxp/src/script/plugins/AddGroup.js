@@ -43,13 +43,15 @@ gxp.plugins.AddGroup = Ext.extend(gxp.plugins.Tool, {
     
     addGroupDialogTitle: "New Group",
     
-    addGroupFieldSetText: "Group Name",
+    addGroupFieldSetText: "Group Info",
     
-    addGroupFieldLabel: "New Group",
+    addGroupFieldLabel: "Group Name",
     
     addGroupButtonText: "Add Group",
     
     addGroupMsg: "Please enter a group name",
+
+    addGroupPositionLabel:"Select a position",
 
     /** 
      * api: method[addActions]
@@ -105,7 +107,7 @@ gxp.plugins.AddGroup = Ext.extend(gxp.plugins.Tool, {
                                         xtype: 'combo',
                                         width: 120,
                                         id:'diag-combobox',
-                                        fieldLabel: 'Select a Position',
+                                        fieldLabel:  this.addGroupPositionLabel,
                                         store: new Ext.data.SimpleStore({
                                             data: [
                                                 ['before', 'before'],

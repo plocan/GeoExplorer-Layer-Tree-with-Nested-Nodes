@@ -41,13 +41,14 @@ gxp.plugins.SavedMaps = Ext.extend(gxp.plugins.Tool, {
     
     savedMapsDialogTitle: "List of saved maps",
     
-    //savedMapsFieldSetText: "Group Name",
-    
-    //savedMapsFieldLabel: "New Group",
-    
+   
     savedMapsButtonText: "Delete map",
     
     savedMapsMsg: "Are you sure you want to delete map of id ",
+
+    savedMapsCreatedColumn: "Created",
+    
+    savedMapsModifiedColumn: "Modified",
 
     /** 
      * api: method[addActions]
@@ -105,8 +106,8 @@ gxp.plugins.SavedMaps = Ext.extend(gxp.plugins.Tool, {
                             columns: [
                                         {header: "Id", dataIndex: 'id', sortable: true},
                                         //{header: "Title", dataIndex: 'title', sortable: false},                                   
-                                        {header: "Created", dataIndex: 'created', xtype:'datecolumn', renderer: Ext.util.Format.dateRenderer('d/m/Y H:i'), sortable: true},
-                                        {header: "Modified", dataIndex: 'modified', xtype:'datecolumn', renderer: Ext.util.Format.dateRenderer('d/m/Y H:i'), sortable: true},
+                                        {header: this.savedMapsCreatedColumn, dataIndex: 'created', xtype:'datecolumn', renderer: Ext.util.Format.dateRenderer('d/m/Y H:i'), sortable: true},
+                                        {header: this.savedMapsModifiedColumn, dataIndex: 'modified', xtype:'datecolumn', renderer: Ext.util.Format.dateRenderer('d/m/Y H:i'), sortable: true},
                     {header: "Composer", sortable: false, xtype: 'actioncolumn',
                           renderer: function(val, meta, record, rowIndex){
                            return '<a href="../composer/#maps/'+record.id+'" target="_blank"><img width="16" height="16" title="" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAJsSURBVHjadFO/q1xlED0z34/73X37oonYCopF8A9QUggpVtKYRqLij8rCKmBi8yzsVUQrIzYmGAsF0cJ/wcomhZ2gRpRFIqYQ3913v/3uzLHYdZP3wNPNwJyZOXNGFovzCYDiHhpJx/9ABACk24Yet8VhE9NJuGp46F7uOEj7k2QVkTmAFgFMmwSUBHIu7+ZcDgABwPt7gyTM2he1Di+TfiiiJZI0Vd03s39CCKdzLgdm9vs0ta8BHIpAtgx7IcRnU+peApDG8fB50seYUn69lPlH4zhcWa/HjwGBWfum1uFqCHHX3ayhlNkyxvx+jPlSKfOval29qIDMASQRfSzG+NR6ffQWyZ9zLk/PZqeWfb+/nM1OLXMui2mavjWblu62irG7lFL3piwW5yGij+RcvkypOzeOw2ut1RsiMheRkeS0EY9wd4gIYkyP9v38l9bqZxEgzKbfSP+O5Lmum10HOLVWP0+pf1tEHwdIEdkHJJvZ99O0fockABxFQDpV8XEcDki/k/Psg67buymiM9L/UNWz7viVJEQIwO+I4MxmKrhub5VUNdR69GGtwwsA0HX9J+52q9bVqyJy0li7++rOHwRCSGfd/dZ6vbpqZrdjLG+k1L1C+sPHi0VOEgCAAfBS5j+5+w/jOFyIMT4hEp5prV4RATZryzGHxROT/SUiUA3P1Tpcdp+eVI17qtptNBCQWJF+d0tVThAISSKEdLHvHyDAAcAIoCd5e6v8mZz7T1UDABkjNqYXEcmk/d1afS+l7iCEeBkgeGzj/wQDzKYfzdo1ue+dBaCRaKr6ICBhm9tNt/M1ANLvkuS/AwAyr0Sye2vZUwAAAABJRU5ErkJggg==" /></a>';
