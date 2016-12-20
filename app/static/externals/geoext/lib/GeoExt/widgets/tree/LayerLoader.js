@@ -218,6 +218,40 @@ Ext.extend(GeoExt.tree.LayerLoader, Ext.util.Observable, {
             }
         }
     },
+
+     getInsertPosition: function(layerStore, root, selectedNode, leaf, node){
+        
+        for (var i = 0, length = root.childNodes.length; i < length; i++) {
+            this.getInsertPosition(layerStore, root.childNodes[i], selectedNode, leaf, node);
+        }
+ 
+        if(root.leaf && root.parentNode.attributes.group != "background" && !leaf.founded && root.text != node.text)//only leaves not in background group
+        {
+            leaf.node = root;       
+            if(leaf.isDescendant){
+                newRecordIndex = layerStore.findBy(function(r) {
+                        return leaf.node.layer === r.getLayer();
+                });
+                leaf.index = newRecordIndex;
+                leaf.founded = true;
+            }
+        }
+
+        if(root.attributes.text == selectedNode.attributes.text)
+        {
+            if(leaf.node != null)
+            {
+                newRecordIndex = layerStore.findBy(function(r) {
+                        return leaf.node.layer === r.getLayer();
+                });
+                leaf.index = newRecordIndex;
+                leaf.founded = true;
+            }
+            else 
+                leaf.isDescendant = true;
+        }    
+      
+    },
     
     /** private: method[onChildMove]
      *  :param tree: ``Ext.data.Tree``
@@ -280,17 +314,35 @@ Ext.extend(GeoExt.tree.LayerLoader, Ext.util.Observable, {
                     oldParent.reload();
                 });
             } else {
-                Ext.Msg.show({
-                    title: "Alert message",
-                         msg: "You can't drop a layer here. Press ok button to reload page and avoid errors",
-                         buttons: Ext.Msg.OK,
-                         icon: Ext.MessageBox.OK,
-                         fn: function(){
-                            window.location.reload();
-                         },
-                         modal: true
-                });
-                return false;
+                var tree = Ext.getCmp("layers"); 
+                var leaf = {
+                    index:-1, 
+                    node:null, 
+                    isDescendant:false,
+                    founded: false
+                };
+
+                this.getInsertPosition(this.store, tree.root, newParent, leaf, node);
+                if(leaf.index != -1){
+                    if(leaf.isDescendant)
+                        this.store.insert(leaf.index + 1, [record]);//inserting after descendant layer
+                    else 
+                        this.store.insert(leaf.index, [record]);//inserting before non-descendant layer                           
+                }
+                else 
+                    this.store.add([record]);
+        /*
+        Ext.Msg.show({
+            title: "Alert message",
+                 msg: "You can't drop a layer here. Press ok button to reload page and avoid errors",
+                 buttons: Ext.Msg.OK,
+                 icon: Ext.MessageBox.OK,
+                 fn: function(){
+                    window.location.reload();
+                 },
+                 modal: true
+        });
+        return false;*/
                 //this.store.insert(oldRecordIndex, [record]);
             }
             delete newParent.loader._reordering;
