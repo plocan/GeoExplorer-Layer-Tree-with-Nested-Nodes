@@ -30,7 +30,7 @@ GeoExt.Lang.add("es", {
         addGroupActionTip: "Añadir un nuevo Contenedor",
         addGroupDialogTitle: "Nuevo Contenedor",
         addGroupFieldSetText: "Datos del Contenedor",
-        addGroupFieldLabel: "Nuevo Contenedor",
+        addGroupFieldLabel: "Nombre",
         addGroupMsg: "Por favor escriba un nombre",
         addGroupButtonText: "Añadir Contenedor",        
         addGroupPositionLabel: "Posición"        
@@ -41,7 +41,7 @@ GeoExt.Lang.add("es", {
         addFolderActionTip: "Añadir nueva Carpeta",
         addFolderDialogTitle: "Nueva Carpeta",
         addFolderFieldSetText: "Datos de la Carpeta",
-        addFolderFieldLabel: "Nueva Carpeta",
+        addFolderFieldLabel: "Nombre",
         addFolderMsg: "Por favor escriba un nombre",
         addFolderButtonText: "Añadir Carpeta",
         addFolderPositionLabel: "Posición"        
