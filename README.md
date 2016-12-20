@@ -75,6 +75,19 @@ As an example, if you want the geoexplorer.db file to be written to your `/tmp` 
 
 When GeoExplorer is running in development mode, the SQlite geoexplorer .db database it points to, is located under /usr/share/opengeo/geoexplorer/target directory, while .db file of the production environment is located in a different location /var/lib/opengeo/.
 
+If you want to be the same .db database for production and development mode then just go to /usr/share/opengeo/geoexplorer/build.xml file and change the following line:
+
+    <sysproperty key="GEOEXPLORER_DATA" path="target"/>
+
+to: 
+
+    <sysproperty key="GEOEXPLORER_DATA" path="/var/lib/opengeo/geoexplorer"/>
+
+then rebuild the project so changes will take effect: 
+
+    you@prompt:~$ cd /usr/share/opengeo/geoexplorer 
+    you@prompt:~$ ant build
+
 ## Versioning
 The proyect is still on developing to have any version yet.
 
