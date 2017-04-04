@@ -1,4 +1,4 @@
-![Picture](https://lh3.googleusercontent.com/-mgRAy0s0csU/WE3SPSJCqsI/AAAAAAAAN30/YeBgXbwa5IE0lPdL79fT_cTWQDuZpPgDQCHM/s300/Logo_PLOCAN_PNG.png)
+![Picture](https://lh3.googleusercontent.com/-vLh-F_0Rw3c/WJnpOO8DfTI/AAAAAAAAN_c/hvB9pmOnid8UCbXecYXmv86ozO01qq2KACHM/w1920/)
 # Gis-web
 
 ## Table of contents
