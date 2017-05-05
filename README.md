@@ -1,9 +1,10 @@
-![Picture](https://lh3.googleusercontent.com/-vLh-F_0Rw3c/WJnpOO8DfTI/AAAAAAAAN_c/hvB9pmOnid8UCbXecYXmv86ozO01qq2KACHM/w1920/)
+![Picture](https://lh3.googleusercontent.com/-mgRAy0s0csU/WE3SPSJCqsI/AAAAAAAAN30/YeBgXbwa5IE0lPdL79fT_cTWQDuZpPgDQCHM/s300/Logo_PLOCAN_PNG.png)
 # Gis-web
 
 ## Table of contents
 1. [GeoExplorer-PLOCAN](#GeoExplorer-PLOCAN)
     1. [Prerequisites](#Prerequisites)
+    2. [Advantages](#Advantages)
 2. [Getting a copy of the application](#Getting a copy of the application)
 3. [Running in development mode](#Running in development mode)
 4. [Preparing the application for deployment](#Preparing the application for deployment)
@@ -24,6 +25,9 @@ You will need:
 * [Apache Ivy](http://ant.apache.org/ivy/download.cgi) - 2.3+
 * [Git](http://git-scm.com/) - 1.7.10+* 
 
+### Advantages
+
+The main advantages of this modified version regarding the original is the possibility of adding/removing/updating unlimited nested nodes of categories to improve layers organization. As a result we take full control of our data. It also carry out the management(save and load) of composed maps. This maps are listed  in a table and each map is linked to a composer and viewer application inside GeoExplorer depending if we want to update them or just publish them. The operation of composing a map require authentication. Drag and drop of layers between categories nodes is allowed.
 
 ## Getting a copy of the application
 
@@ -40,7 +44,7 @@ To run the application in development mode:
     you@prompt:~$ cd geoexplorer
     you@prompt:~/geoexplorer$ ant -Dapp.proxy.geoserver=http://192.168.53.87:8080/geoserver/ debug
 
-If the build succeeds, you'll be able to browse to the application at http://localhost:9080/.
+If the build succeeds, you'll be able to browse to the application at http://192.168.53.87:9080/.
 
 In addition, if you want to make a remote GeoServer available at the `/geoserver/` path, you can set the `app.proxy.geoserver` system property as follows:
 
@@ -49,7 +53,7 @@ In addition, if you want to make a remote GeoServer available at the `/geoserver
 
 ## Preparing the application for deployment
 
-Running GeoExplorer as described above is not suitable for production because JavaScript files will be loaded dynamically.  Before moving your application to a production environment, run `ant build` and find the resulting `geoexplorer.war` in the `target` directory. Move the `target/geoexplorer.war` file to your production environment (e.g. a  servlet container). Let's see it through a typical example:
+Running GeoExplorer as described above is not suitable for production because JavaScript files will be loaded dynamically.  First, we'll need to delete the original GeoExplorer application in the production environment and replacig it with the modified one. Once inside it, run `ant build` and find the resulting `geoexplorer.war` in the `target` directory. Move the `target/geoexplorer.war` file to your production environment (e.g. a  servlet container). Let's see it through a typical example:
 
     you@prompt:~$ service tomcat7 stop
     you@prompt:~$ cd /usr/share/opengeo/
@@ -95,5 +99,5 @@ The proyect is still on developing to have any version yet.
 * **Tania Morales** - *Team manager* - tania.morales@plocan.eu
 * **Javier Gonzalez** - *Team revisions* - javier.gonzalez@plocan.eu
 * **José Díaz** - *Developer* - ordicu85@gmail.com
-* **Daniel Álamo** - *Developer* - daniel.alamo.ext@plocan.eu
+
 
