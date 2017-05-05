@@ -1,4 +1,4 @@
-![Picture](https://lh3.googleusercontent.com/-mgRAy0s0csU/WE3SPSJCqsI/AAAAAAAAN30/YeBgXbwa5IE0lPdL79fT_cTWQDuZpPgDQCHM/s300/Logo_PLOCAN_PNG.png)
+![Picture](https://empleo.plocan.eu/static/plocan.png)
 # Gis-web
 
 ## Table of contents
