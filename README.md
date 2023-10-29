@@ -1,4 +1,4 @@
-![Picture](https://empleo.plocan.eu/static/plocan.png)
+![Picture](https://plocan.eu/wp-content/uploads/PLOC_logo.svg)
 # Gis-web
 
 ## Table of contents
